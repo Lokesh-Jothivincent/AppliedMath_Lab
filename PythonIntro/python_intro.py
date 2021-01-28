@@ -5,7 +5,7 @@
 <Date> 1/22/21
 """
 def sphere_volume(r):
-    return ((4/3) *3.14159* r**2)
+	return((4/3) * 3.14159 * (r**3))
 
 def isolate(a,b,c,d,e):
     print(a,end='     ')
@@ -23,28 +23,30 @@ def backward(a):
     """
     return the string in reverse order using slicing [start:end:step]
     """
-    return (a[-1:0:-1])
+    return (a[-1::-1])
 
-def list_ops(a):
-    a.append("eagle")
-    print("add eagle to the end...",a)
-    a[2] = "fox"
-    print("fox is added at index=2...",a)
-    a.remove(a[1])
-    print("remove index at 1...",a)
-    a.reverse()
-    print("recverse the list",a)
-    a[a.index("eagle")] = "hawk"
-    print("replace eagle with hawk...",a)
-    a.append("hunter")
-    print("add hunter to the end...",a)
-    return a
-    
+def list_ops():
+	temp_list = ["bear", "ant", "cat", "dog"]
+	temp_list.append("eagle")
+	#print(temp_list)
+	temp_list[2]= "fox"
+	#print(temp_list)
+	temp_list.remove(temp_list[1])
+	#print(temp_list)
+	temp_list.reverse()
+	#print(temp_list)
+	temp_list.append("hunter")
+	return temp_list
+
+
 def pig_latin(word):
-    if word[0] in ("a","e","i","o","u","y"): #sometimes y
-        return print(word+"hay")
-    else:
-        return print(word[1:]+word[0]+"ay")
+	if word[0] in 'aeiou':
+		word +='hay'
+	else:
+		word = word[1:]+word[0]+'ay'
+	return word
+
+
     
 def palindrome():
     n = 0
@@ -71,35 +73,35 @@ def alt_harmonic(n):
     return sum(temp_list)
 
 if __name__ == "__main__":
-    print("Hello, world!")
-    print("Problem:2")
-    print("Volume of sphere with r= 1m is")
-    print(sphere_volume(1))
-    print("Problem:3")
-    isolate(1,2,3,4,5)
-    print("Problem:4")
-    str_name = "Heheeohoh"
-    result1 = first_half(str_name)
-    print(result1)
-    result2 = backward(str_name)
-    print(result2)
-    print("Problem:5")
-    my_list = ["bear","ant","cat","dog"]
-    print("intial lsit...",my_list)
-    list_ops(my_list)
-    print("Problem:6")
-    first ="you"
-    second = "are"
-    third = "correct"
-    fourth ="!"
-    pig_latin(first)
-    pig_latin(second)
-    pig_latin(third)
-    pig_latin(fourth)
-    print("Problem:7")
-    print(palindrome())
-    print("Problem:8")
-    print(alt_harmonic(500000))
-    
+#    print("Hello, world!")
+#    print("Problem:2")
+#    print("Volume of sphere with r= 1m is")
+#    print(sphere_volume(1))
+#    print("Problem:3")
+#    isolate(1,2,3,4,5)
+#    print("Problem:4")
+#    str_name = "Heheeohoh"
+#    result1 = first_half(str_name)
+#    print(result1)
+#    result2 = backward(str_name)
+#    print(result2)
+#    print("Problem:5")
+#    my_list = ["bear","ant","cat","dog"]
+#    print("intial lsit...",my_list)
+    list_ops()
+#    print("Problem:6")
+#    first ="you"
+#    second = "are"
+#    third = "correct"
+#    fourth ="!"
+#    pig_latin(first)
+#    pig_latin(second)
+#    pig_latin(third)
+#    pig_latin(fourth)
+#    print("Problem:7")
+#    print(palindrome())
+#    print("Problem:8")
+#    print(alt_harmonic(500000))
+#    
     
     
