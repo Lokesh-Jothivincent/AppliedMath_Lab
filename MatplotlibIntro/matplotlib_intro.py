@@ -1,10 +1,11 @@
 # matplotlib_intro.py
 """Python Essentials: Intro to Matplotlib.
-<Name>
-<Class>
-<Date>
+<Name> Lokesh
+<Class> Mth 520
+<Date> 2/1/21
 """
-
+import numpy as np
+from matplotlib import pyplot as plt
 
 # Problem 1
 def var_of_means(n):
@@ -18,13 +19,24 @@ def var_of_means(n):
     Returns:
         (float) The variance of the means of each row.
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    #raise NotImplementedError("Problem 1 Incomplete")
+    arr_nn = np.random.normal(size=(n,n))
+    res_mean = np.mean(arr_nn,axis =1)
+    res_var = np.var(res_mean)
+    return res_var
 
 def prob1():
     """Create an array of the results of var_of_means() with inputs
     n = 100, 200, ..., 1000. Plot and show the resulting array.
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    #raise NotImplementedError("Problem 1 Incomplete")
+    input = np.arange(100,1001,100)
+    result = [var_of_means(n) for n in input]
+    #result = var_of_means(5)
+    plt.plot(input, result)
+    plt.show()
+
+    return result
 
 
 # Problem 2
@@ -33,7 +45,12 @@ def prob2():
     [-2pi, 2pi]. Make sure the domain is refined enough to produce a figure
     with good resolution.
     """
-    raise NotImplementedError("Problem 2 Incomplete")
+    #raise NotImplementedError("Problem 2 Incomplete")
+    domain = np.linspace(-1*np.pi,np.pi,1000)
+    ax = plt.plot(domain,np.sin(domain))
+    ax = plt.plot(domain,np.cos(domain))
+    ax = plt.plot(domain,np.arctan(domain))
+    plt.show()
 
 
 # Problem 3
@@ -89,3 +106,7 @@ def prob6():
         4. Add a colorbar to each subplot.
     """
     raise NotImplementedError("Problem 6 Incomplete")
+
+if __name__ == "__main__":
+    #print(prob1())
+    prob2()
