@@ -1,0 +1,28 @@
+02/05/21 23:02
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (10 points):
+[-2pi, 2pi]
+Score += 8
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+Score += 10
+
+Problem 6 (10 points):
+one contour plot
+Score += 9
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 47/50 = 94.0%
+
+Great job!
+
+-------------------------------------------------------------------------------
+
