@@ -61,7 +61,19 @@ def prob3():
         3. Set the range of the x-axis to [-2,6] and the range of the
            y-axis to [-6,6].
     """
-    raise NotImplementedError("Problem 3 Incomplete")
+    #raise NotImplementedError("Problem 3 Incomplete")
+    domain1 = np.arange(-2,1,0.1)
+    domain2 = np.arange(1.01,6.01,0.1)
+    f = lambda x: 1/(x-1)
+    result1 = f(domain1)
+    result2 = f(domain2)
+    result = np.append(result1, result2)
+    plt.plot(domain1,result1,'m:',lw=4)
+    plt.plot(domain2,result2,'m:',lw=4)
+    plt.xlim(-2,6)
+    plt.ylim(-6,6)
+    plt.show()
+    return result
 
 
 # Problem 4
@@ -78,7 +90,25 @@ def prob4():
              2sin(x): blue dashed line.
             2sin(2x): magenta dotted line.
     """
-    raise NotImplementedError("Problem 4 Incomplete")
+    #raise NotImplementedError("Problem 4 Incomplete")
+    domain = np.linspace(0,2*np.pi,200)
+    res1 = np.sin(domain)
+    res2 = np.sin(2*domain)
+    res3 = 2*np.sin(domain)
+    res4 = 2*np.sin(2*domain)
+    fig,ax = plt.subplots(2,2)
+    ax[0,0].plot(domain,res1,'g-')
+    ax[0,1].plot(domain,res2,'r--')
+    ax[1,0].plot(domain,res3,'b--')
+    ax[1,1].plot(domain,res4,'m:')
+    ax[0,0].set_title('f = sin(x)')
+    ax[0,1].set_title('f = sin(2x)')
+    ax[1,0].set_title('f = 2sin(x)')
+    ax[1,1].set_title('f = 2sin(2x)')
+    plt.setp(ax,xlim = [0,7],ylim = [-2,2])
+    fig.suptitle('Subplots with same axes',fontsize = 20)
+    plt.show()
+    return 1
 
 
 # Problem 5
@@ -109,4 +139,5 @@ def prob6():
 
 if __name__ == "__main__":
     #print(prob1())
-    prob2()
+    #print(prob3())
+    print(prob4())
