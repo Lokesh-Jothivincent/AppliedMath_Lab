@@ -6,6 +6,9 @@
 """
 import numpy as np
 from matplotlib import pyplot as plt
+#ref....
+#https://stackoverflow.com/questions/43469163/how-to-install-colormap-using-pip-for-spyder-python-3-5-on-windows
+import matplotlib.colors as mcolors
 
 # Problem 1
 def var_of_means(n):
@@ -105,7 +108,7 @@ def prob4():
     ax[0,1].set_title('f = sin(2x)')
     ax[1,0].set_title('f = 2sin(x)')
     ax[1,1].set_title('f = 2sin(2x)')
-    plt.setp(ax,xlim = [0,7],ylim = [-2,2])
+    plt.setp(ax,xlim = [0,2*np.pi],ylim = [-2,2])
     fig.suptitle('Subplots with same axes',fontsize = 20)
     plt.show()
     return 1
@@ -135,9 +138,28 @@ def prob6():
         3. Choose a non-default color scheme.
         4. Add a colorbar to each subplot.
     """
-    raise NotImplementedError("Problem 6 Incomplete")
+    #raise NotImplementedError("Problem 6 Incomplete")
+    cmap1 = mcolors.LinearSegmentedColormap.from_list("n", ["crimson", "gold","steelblue"])
+    cmap2 = mcolors.LinearSegmentedColormap.from_list("n", ["blue", "red","green"])
+    x_domain = np.linspace(-2*np.pi,2*np.pi)
+    y_domain = np.linspace(-2*np.pi,2*np.pi)
+    X,Y = np.meshgrid(x_domain,y_domain)
+    g = (np.sin(X)*np.sin(Y)) / (X*Y)
+    #ploting heat map
+    plt.subplot(121)
+    plt.pcolormesh(X,Y,g,cmap=cmap1)
+    plt.colorbar()
+    plt.xlim(-2*np.pi,2*np.pi)
+    plt.ylim(-2*np.pi,2*np.pi)
+    #ploting contour map
+    plt.subplot(122)
+    plt.contourf(X,Y,g,5,cmap = cmap2)
+    plt.colorbar()
+    plt.show()
+    return 1
 
 if __name__ == "__main__":
     #print(prob1())
     #print(prob3())
-    print(prob4())
+    #print(prob4())
+    print(prob6())
