@@ -78,11 +78,11 @@ def polynomial_fit():
         index.append(each[1])
     year  = np.array(year)
     index = np.array(index)
-    #vandermonde matrix of 3,6,9,12
-    A3 = np.vander(year,3)
-    A6 = np.vander(year,6)
-    A9 = np.vander(year,9)
-    A12 = np.vander(year,12)
+    #vandermonde matrix of 3,6,9,12 degree polynomials
+    A3 = np.vander(year,4)
+    A6 = np.vander(year,7)
+    A9 = np.vander(year,10)
+    A12 = np.vander(year,13)
     #least squarwes solution using scipy least squares routine
     #la.lstsq()[0] returns the x_cap
     x3 = la.lstsq(A3,index)[0]
@@ -90,24 +90,79 @@ def polynomial_fit():
     x9 = la.lstsq(A9,index)[0]
     x12 = la.lstsq(A12,index)[0]
     #fitting a ploynomial using the above results
-    fit3 =np.poly1d([x3,1])
-    fit6 =np.poly1d([1,1,1,1,1,1])
-    fit9 =np.poly1d([1,1,1,1,1,1,1,1,1])
-    fit12 =np.poly1d([1,1,1,1,1,1,1,1,1,1,1,1])
+    fit3 =np.poly1d(x3)
+    fit6 =np.poly1d(x6)
+    fit9 =np.poly1d(x9)
+    fit12 =np.poly1d(x12)
     #comparing solutions with polynomial_fit
-    #plotting
+    #resolved x
     new_x = np.linspace(0,16)
-    coeff = np.polyfit(year,index,3)
-    poly = np.poly1d(coeff)
-    new_y = poly(new_x)
+    #generating coeffs fo polynomials
+    coeff3 = np.polyfit(year,index,3)
+    coeff6 = np.polyfit(year,index,6)
+    coeff9 = np.polyfit(year,index,9)
+    coeff12 = np.polyfit(year,index,12)
+    #generating actual polynomial with the coeffs
+    poly3 = np.poly1d(coeff3)
+    poly6 = np.poly1d(coeff6)
+    poly9 = np.poly1d(coeff9)
+    poly12 = np.poly1d(coeff12)
+    #geenrating y data for the plot
+    new_y3 = poly3(new_x)
+    new_y6 = poly6(new_x)
+    new_y9 = poly9(new_x)
+    new_y12 = poly12(new_x)
 
-
+    #plotting
     plt.figure(1)
-    plt.subplot(221)
+    plt.subplot(421)
+    plt.plot(year,index,marker = "o",label = 'Data Points')
+    plt.plot(new_x,new_y3,label = 'polyfit')
+    plt.legend(loc = 'lower right')
+    plt.title("3rd degree")
+
+    plt.subplot(422)
     plt.plot(year,index,marker = 'o',label = 'Data Points')
-    plt.plot(new_x,new_y,label = 'polyfit')
-    #plt.plot(new_x,fit3(new_x),label = 'my fit')
-    #plt.plot(np.linspace(0,16,100),fit3(x3))
+    plt.plot(new_x,fit3(new_x),label = 'my fit')
+    plt.legend(loc = 'lower right')
+    plt.title("3rd degree")
+
+    plt.subplot(423)
+    plt.plot(year,index,marker = 'o',label = 'Data Points')
+    plt.plot(new_x,new_y6,label = 'polyfit')
+    plt.legend(loc = 'lower right')
+    plt.title("6th degree")
+
+    plt.subplot(424)
+    plt.plot(year,index,marker = 'o',label = 'Data Points')
+    plt.plot(new_x,fit6(new_x),label = 'my fit')
+    plt.legend(loc = 'lower right')
+    plt.title("6th degree")
+
+    plt.subplot(425)
+    plt.plot(year,index,marker = 'o',label = 'Data Points')
+    plt.plot(new_x,new_y9,label = 'polyfit')
+    plt.legend(loc = 'lower right')
+    plt.title("9th degree")
+
+    plt.subplot(426)
+    plt.plot(year,index,marker = 'o',label = 'Data Points')
+    plt.plot(new_x,fit9(new_x),label = 'my fit')
+    plt.legend(loc = 'lower right')
+    plt.title("9th degree")
+
+    plt.subplot(427)
+    plt.plot(year,index,marker = 'o',label = 'Data Points')
+    plt.plot(new_x,new_y12,label = 'polyfit')
+    plt.legend(loc = 'lower right')
+    plt.title("12th degree")
+
+    plt.subplot(428)
+    plt.plot(year,index,marker = 'o',label = 'Data Points')
+    plt.plot(new_x,fit12(new_x),label = 'my fit')
+    plt.legend(loc = 'lower right')
+    plt.title("12th degree")
+
     plt.show()
 
 
