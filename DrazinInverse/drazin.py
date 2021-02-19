@@ -77,7 +77,14 @@ def effective_resistance(A):
         ((n,n) ndarray) The matrix where the ijth entry is the effective
         resistance from node i to node j.
     """
-    raise NotImplementedError("Problem 3 Incomplete")
+    #raise NotImplementedError("Problem 3 Incomplete")
+    row,col = np.shape(A)
+    D=np.zeros(col)
+    for each in range(col):
+        D[each] = np.sum(A[:,each])
+    D = np.diag(D)
+    L = D-A
+    return L
 
 
 # Problems 4 and 5
@@ -110,7 +117,7 @@ class LinkPredictor:
         Raises:
             ValueError: If node is not in the graph.
         """
-        raise NotImplementedError("Problem 5 Incomplete"
+        raise NotImplementedError("Problem 5 Incomplete")
 
 
     def add_link(self, node1, node2):
@@ -125,3 +132,7 @@ class LinkPredictor:
             ValueError: If either node1 or node2 is not in the graph.
         """
         raise NotImplementedError("Problem 5 Incomplete")
+
+if __name__ =="__main__":
+    A = np.array([[1,0,1,1,0,0],[0,1,0,1,0,0],[1,0,1,1,0,1],[1,1,1,1,0,1],[0,0,0,0,1,1],[0,0,1,1,1,1]])
+    print(effective_resistance(A))
