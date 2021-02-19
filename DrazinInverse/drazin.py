@@ -1,8 +1,8 @@
-# drazin.py
+#drazin.py
 """Volume 1: The Drazin Inverse.
-<Name>
-<Class>
-<Date>
+<Name> Lokesh
+<Class> Mth 520
+<Date> 2/18/21
 """
 
 import numpy as np
@@ -50,8 +50,12 @@ def is_drazin(A, Ad, k):
     Returns:
         (bool) True of Ad is the Drazin inverse of A, False otherwise.
     """
-    raise NotImplementedError("Problem 1 Incomplete")
-
+    #raise NotImplementedError("Problem 1 Incomplete")
+    if np.allclose(np.dot(A,Ad), np.dot(Ad,A)):
+        if np.allclose(np.dot( np.linalg.matrix_power(A,k+1),Ad),np.linalg.matrix_power(A,k)):
+            if np.allclose(np.dot(np.dot(Ad,A),Ad),Ad):
+                return "True"
+    return False
 
 # Problem 2
 def drazin_inverse(A, tol=1e-4):
@@ -63,7 +67,35 @@ def drazin_inverse(A, tol=1e-4):
     Returns:
        ((n,n) ndarray) The Drazin inverse of A.
     """
-    raise NotImplementedError("Problem 2 Incomplete")
+    #raise NotImplementedError("Problem 2 Incomplete")
+    (row,col) = np.shape(A)
+    f_more= lambda x: abs(x) >tol
+    f_less = lambda x: abs(x) <= tol
+    T1,Q1,k1 = la.schur (A,sort = f_more)
+    T2,Q2,k2 = la.schur (A,sort = f_less)
+    M = T1[:k1,:k1]
+    U = Q1[:,:k1]
+    U = np.column_stack((U, Q2[:,:k2]))
+    '''
+    print(Z1)
+    print("-------------")
+    print(Z2)
+    print("-------------")
+    '''
+    U_inv = np.linalg.inv(U)
+    V = np.dot(np.dot(U_inv,A),U)
+
+    Z = np.zeros((row,col))
+    row1,col1 = np.shape(V)
+    #print(V[:col1,:col1])
+
+    if col1 !=0:
+        M_inv = np.linalg.inv(V[:k1,:k1])
+
+    Z[:k1,:k1] = M_inv
+
+    return np.dot(np.dot(U,Z),U_inv)
+
 
 
 # Problem 3
@@ -84,7 +116,11 @@ def effective_resistance(A):
         D[each] = np.sum(A[:,each])
     D = np.diag(D)
     L = D-A
-    return L
+    L_D = drazin_inverse(L)
+    row1,col1 = np.shape(L_D)
+    for each in range(col1):
+        L_D[each,each] = 0
+    return L_D
 
 
 # Problems 4 and 5
@@ -134,5 +170,21 @@ class LinkPredictor:
         raise NotImplementedError("Problem 5 Incomplete")
 
 if __name__ =="__main__":
+    '''
+    A= np.array([[1,3,0 ,0], [0,1,3,0], [0,0,1,3], [0,0,0,0] ])
+    A_D = np.array([ [1,-3,9,81], [0,1,-3,-18], [0,0,1,3],[0,0,0,0]])
+    k=1
+
+    #print(is_drazin(A,A_D,k))
+    B = np.array([ [1,1,3], [5,2,6], [-2,-1,-3] ])
+    B_D = np.array([ [0,0,0,],[0,0,0],[0,0,0] ])
+    kb=3
+    #print(is_drazin(B,B_D,kb))
+
+    C = np.array([ [0,0,2],[-3,2,6], [0,0,1] ])
+    #print(drazin_inverse(C))
+    print(is_drazin(A,drazin_inverse(A),k))
+    print(is_drazin(B,drazin_inverse(B),kb))
+    '''
     A = np.array([[1,0,1,1,0,0],[0,1,0,1,0,0],[1,0,1,1,0,1],[1,1,1,1,0,1],[0,0,0,0,1,1],[0,0,1,1,1,1]])
     print(effective_resistance(A))
