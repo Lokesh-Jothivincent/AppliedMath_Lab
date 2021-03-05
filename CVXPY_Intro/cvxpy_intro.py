@@ -107,7 +107,13 @@ def prob4():
         The optimizer x (ndarray)
         The optimal value (float)
     """
-    raise NotImplementedError("Problem 4 Incomplete")
+    #raise NotImplementedError("Problem 4 Incomplete")
+    Q = np.array([[3,2,1],[2,4,2],[1,2,3]])
+    r = np.array([3,0,1])
+    x = cp.Variable(3)
+    prob = cp.Problem(cp.Minimize(.5 * cp.quad_form(x, Q) + r.T @ x))
+    sol = prob.solve()
+    return x.value,sol
 
 
 # Problem 5
@@ -147,4 +153,5 @@ if __name__ == "__main__":
     #A = np.array([[1,2,1,1],[0,3,-2,-1]])
     #b = np.array([[7],[4]])
     #print(l1Min(A, b))
-    print(prob3())
+    #print(prob3())
+    print(prob4())
