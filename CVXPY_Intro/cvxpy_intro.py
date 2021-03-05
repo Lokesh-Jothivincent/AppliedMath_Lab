@@ -80,7 +80,6 @@ def prob3():
         The optimal value (float)
     """
     #raise NotImplementedError("Problem 3 Incomplete")
-    #raise NotImplementedError("Problem 1 Incomplete")
     x= cp.Variable(6,nonneg = True)
     c =np.array([4,7,6,8,8,9])
     objective  = cp.Minimize(c.T @ x)
@@ -130,7 +129,21 @@ def prob5(A, b):
         The optimizer x (ndarray)
         The optimal value (float)
     """
-    raise NotImplementedError("Problem 5 Incomplete")
+    #raise NotImplementedError("Problem 5 Incomplete")
+    x= cp.Variable(4,nonneg =True)
+    cost = np.linalg.lstsq(A, b, rcond=None)[0]
+    objective = cp.Minimize(cp.norm(cost,2))
+    
+    #constraint part
+    P=np.eye(4)
+    G = np.array([1,1,1,1])
+    print(np.sum(G@x) ==1)
+    constraints = [P@x>=0,np.sum(G@x) ==1]
+    
+    prob = cp.Problem(objective,constraints)
+    sol = prob.solve()
+    
+    return x.value,sol#1#np.array([0,1,0,0]) , 5.099
 
 
 # Problem 6
@@ -150,8 +163,9 @@ def prob6():
 if __name__ == "__main__":
     #print('booyeah')
     #print(prob1())
-    #A = np.array([[1,2,1,1],[0,3,-2,-1]])
-    #b = np.array([[7],[4]])
+    A = np.array([[1,2,1,1],[0,3,-2,-1]])
+    b = np.array([[7],[4]])
     #print(l1Min(A, b))
     #print(prob3())
-    print(prob4())
+    #print(prob4())
+    print(prob5(A,b))
