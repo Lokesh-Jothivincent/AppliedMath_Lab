@@ -1,10 +1,12 @@
 # cvxpy_intro.py
 """Volume 2: Intro to CVXPY.
-<Name>
-<Class>
-<Date>
+<Name> Lokesh
+<Class> Mth 520
+<Date> 3/3/21
 """
-
+import numpy as np
+import cvxpy as cp
+from scipy.optimize import nnls 
 
 def prob1():
     """Solve the following convex optimization problem:
@@ -21,7 +23,21 @@ def prob1():
         The optimizer x (ndarray)
         The optimal value (float)
     """
-    raise NotImplementedError("Problem 1 Incomplete")
+    #raise NotImplementedError("Problem 1 Incomplete")
+    x= cp.Variable(3,nonneg = True)
+    c =np.array([2,1,3])
+    objective  = cp.Minimize(c.T @ x)
+    
+    A = np.array([1,2,0])
+    G = np.array([0,1,-4])
+    H = np.array([2,10,3])
+    P = np.eye(3)
+    constraints = [A@x <=3, G@x <=1, H@x >=12,P@x >=0]
+    problem = cp.Problem(objective, constraints)
+    solution = problem.solve()
+    
+    return x.value, solution
+    
 
 
 # Problem 2
@@ -39,8 +55,20 @@ def l1Min(A, b):
         The optimizer x (ndarray)
         The optimal value (float)
     """
-    raise NotImplementedError("Problem 2 Incomplete")
+    #raise NotImplementedError("Problem 2 Incomplete")
+    x_var= cp.Variable(np.shape(A)[1],nonneg = True)
+    c= np.array([1,1,1,1])
+    objective  = cp.Minimize(cp.norm(c.T @ x_var,1))
+    P = np.eye(np.shape(A)[1])
+    constraints =list()
+    for row in range(np.shape(A)[0]):
+        constraints.append(A[row,:]@x_var==b[row,:])
+    constraints.append(P@x_var>=0)
+    
+    problem = cp.Problem(objective, constraints)
+    solution = problem.solve()
 
+    return x_var.value,solution
 
 # Problem 3
 def prob3():
@@ -51,8 +79,23 @@ def prob3():
         The optimizer x (ndarray)
         The optimal value (float)
     """
-    raise NotImplementedError("Problem 3 Incomplete")
-
+    #raise NotImplementedError("Problem 3 Incomplete")
+    #raise NotImplementedError("Problem 1 Incomplete")
+    x= cp.Variable(6,nonneg = True)
+    c =np.array([4,7,6,8,8,9])
+    objective  = cp.Minimize(c.T @ x)
+    
+    A = np.array([1,1,0,0,0,0])
+    G = np.array([0,0,1,1,0,0])
+    H = np.array([0,0,0,0,1,1])
+    I =np.array([1,0,1,0,1,0])
+    J = np.array([0,1,0,1,0,1])
+    P = np.eye(6)
+    constraints = [A@x ==7, G@x ==2, H@x ==4,I@x ==5,J@x ==8,P@x >=0]
+    problem = cp.Problem(objective, constraints)
+    solution = problem.solve()
+    
+    return x.value, solution
 
 # Problem 4
 def prob4():
@@ -97,3 +140,11 @@ def prob6():
         The optimal value (float)
     """	 
     raise NotImplementedError("Problem 6 Incomplete")
+    
+if __name__ == "__main__":
+    #print('booyeah')
+    #print(prob1())
+    #A = np.array([[1,2,1,1],[0,3,-2,-1]])
+    #b = np.array([[7],[4]])
+    #print(l1Min(A, b))
+    print(prob3())
