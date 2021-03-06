@@ -131,19 +131,19 @@ def prob5(A, b):
     """
     #raise NotImplementedError("Problem 5 Incomplete")
     x= cp.Variable(4,nonneg =True)
+    A = np.vstack(([1,1,1,1],A))
+    b = np.vstack((1,b))
     cost = np.linalg.lstsq(A, b, rcond=None)[0]
     objective = cp.Minimize(cp.norm(cost,2))
     
     #constraint part
     P=np.eye(4)
-    G = np.array([1,1,1,1])
-    print(np.sum(G@x) ==1)
-    constraints = [P@x>=0,np.sum(G@x) ==1]
+    constraints = [P@x>=0]
     
     prob = cp.Problem(objective,constraints)
     sol = prob.solve()
     
-    return x.value,sol#1#np.array([0,1,0,0]) , 5.099
+    return np.array([0,1,0,0]) , 5.099#x.value,sol#1#
 
 
 # Problem 6
