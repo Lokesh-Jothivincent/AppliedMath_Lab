@@ -6,7 +6,6 @@
 """
 import numpy as np
 import cvxpy as cp
-from scipy.optimize import nnls 
 
 def prob1():
     """Solve the following convex optimization problem:
@@ -27,7 +26,7 @@ def prob1():
     x= cp.Variable(3,nonneg = True)
     c =np.array([2,1,3])
     objective  = cp.Minimize(c.T @ x)
-    
+   
     A = np.array([1,2,0])
     G = np.array([0,1,-4])
     H = np.array([2,10,3])
@@ -130,20 +129,23 @@ def prob5(A, b):
         The optimal value (float)
     """
     #raise NotImplementedError("Problem 5 Incomplete")
-    x= cp.Variable(4,nonneg =True)
-    A = np.vstack(([1,1,1,1],A))
-    b = np.vstack((1,b))
-    cost = np.linalg.lstsq(A, b, rcond=None)[0]
+    temp = np.ones(A.shape[1])
+    #adding row of ones to add the constraint ||x||_1 to the objective function
+    A = np.vstack((A,temp))
+    b = np.vstack((b,1))
+    #print(A)
+    #print(b)
+    x= cp.Variable(A.shape[1],nonneg=True)
+    cost = (A@x)[None,1] - b
     objective = cp.Minimize(cp.norm(cost,2))
-    
     #constraint part
     P=np.eye(4)
     constraints = [P@x>=0]
     
-    prob = cp.Problem(objective,constraints)
-    sol = prob.solve()
-    
-    return np.array([0,1,0,0]) , 5.099#x.value,sol#1#
+    prob = cp.Problem(objective , constraints)
+    prob.solve()
+   
+    return x.value,prob.value#1#
 
 
 # Problem 6
@@ -163,9 +165,13 @@ def prob6():
 if __name__ == "__main__":
     #print('booyeah')
     #print(prob1())
+    
     A = np.array([[1,2,1,1],[0,3,-2,-1]])
     b = np.array([[7],[4]])
+
     #print(l1Min(A, b))
     #print(prob3())
     #print(prob4())
     print(prob5(A,b))
+    
+    
