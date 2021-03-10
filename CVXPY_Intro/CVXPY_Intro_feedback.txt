@@ -1,0 +1,24 @@
+03/10/21 13:42
+
+Problem 1 (5 points):
+Score += 5
+
+Problem 2 (10 points):
+ValueError: Incompatible dimensions (1, 4) (5, 1)
+
+Problem 3 (10 points):
+Score += 10
+
+Problem 4 (10 points):
+Score += 10
+
+Problem 5 (10 points):
+ValueError: all the input array dimensions for the concatenation axis must match exactly, but along dimension 1, the array at index 0 has size 5 and the array at index 1 has size 1
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 30/50 = 60.0%
+
+-------------------------------------------------------------------------------
+
